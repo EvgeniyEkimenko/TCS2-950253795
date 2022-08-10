@@ -1,0 +1,65 @@
+{-
+
+  TASK 1 - Greatest common divisor
+  Write the method that calculates greater common divisor for two integers greater
+  or equal to 1 and less than 1048576.
+-}
+
+;; (int, int) pair_swap(int a, int b) asm "SWAP";
+
+() recv_internal() {
+}
+
+;; testable
+int gcd(int a, int b) method_id {
+
+    (int mini, int maxi) = minmax(a, b);
+    throw_if(5, mini <  0);
+    throw_if(5, maxi > 1048576);
+
+    while ((a != 0) & (b != 0)) {
+        if (a >= b) {
+            a = a % b;
+        } else {
+            b = b % a;
+        }
+    }
+    return b + a;
+}
+
+    ;; if (a==0) { 
+    ;;     return b; 
+    ;; }
+    ;; if (b==0) { 
+    ;;     return a; 
+    ;; }
+
+    ;; int t = 0;
+    ;; int s = 0;
+    ;; while (((a | b) & -1) == 0) {
+    ;;     a >>= 1;
+    ;;     b >>= 1;
+    ;;     s += 1;
+    ;; }
+
+    ;; while ((a > -1) == 0) {
+    ;;     a >>= 1;
+    ;;     }
+
+    ;; do {
+    ;;     while ((b & -1) == 0) {
+    ;;         b >>= 1;
+    ;;         }
+ 
+    ;;     if (a > b) {
+    ;;         ;; (a, b) = pair_swap(a, b);
+    ;;         t = a;
+    ;;         a = b;
+    ;;         b = t;
+    ;;         }
+ 
+    ;;     b = b - a;
+
+    ;; } until (b != 0);
+ 
+    ;; return a << s;

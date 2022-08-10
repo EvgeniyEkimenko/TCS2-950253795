@@ -1,0 +1,38 @@
+() recv_internal() {
+}
+
+
+;; testable
+(cell, cell) merge_hashmaps(cell dict1, cell dict2) method_id {
+
+    int size = 256;
+
+    (int k1, slice tr, int temp1) = dict1.udict_get_min?(size);
+    (int k2, slice ts, int temp2) = dict2.udict_get_min?(size);
+
+    if ((temp1 + temp2 == 0)) {
+        return (null(), null());
+    }
+
+    if (~ temp1) {
+        return (null(), dict2);
+    }
+
+    if (~ temp2) {
+        return (dict1, null());
+    }
+
+    do {
+        int add_h = dict1~udict_add?(size, k2, ts);
+
+        if (add_h) {
+            _ = dict2~udict_delete?(size, k2);
+            }
+
+        (k2, ts, int h) = dict2.udict_get_next?(size, k2);
+        
+    } until((~ h));
+
+    return (dict1, dict2);
+
+}
